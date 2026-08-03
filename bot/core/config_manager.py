@@ -59,6 +59,7 @@ class Config:
     def load(cls):
         cls.load_config()
         cls.load_env()
+        cls._validate_mandatory()
 
     @classmethod
     def load_config(cls):
@@ -85,13 +86,6 @@ class Config:
                             continue
                     setattr(cls, attr, value)
 
-        for key in ["BOT_TOKEN", "OWNER_ID", "TELEGRAM_API", "TELEGRAM_HASH"]:
-            value = getattr(cls, key)
-            if isinstance(value, str):
-                value = value.strip()
-            if not value:
-                raise ValueError(f"{key} variable is missing!")
-
     @classmethod
     def load_env(cls):
         config_vars = cls.get_all()
@@ -100,6 +94,15 @@ class Config:
             if env_value is not None:
                 converted_value = cls._convert_env_type(key, env_value)
                 cls.set(key, converted_value)
+
+    @classmethod
+    def _validate_mandatory(cls):
+        for key in ["BOT_TOKEN", "OWNER_ID", "TELEGRAM_API", "TELEGRAM_HASH"]:
+            value = getattr(cls, key)
+            if isinstance(value, str):
+                value = value.strip()
+            if not value:
+                raise ValueError(f"{key} variable is missing!")
 
     @classmethod
     def _convert_env_type(cls, key, value):
@@ -137,12 +140,7 @@ class Config:
                 value = cls._convert_env_type(key, value)
                 setattr(cls, key, value)
 
-        for key in ["BOT_TOKEN", "OWNER_ID", "TELEGRAM_API", "TELEGRAM_HASH"]:
-            value = getattr(cls, key)
-            if isinstance(value, str):
-                value = value.strip()
-            if not value:
-                raise ValueError(f"{key} variable is missing!")
+        cls._validate_mandatory()
 
 class BinConfig:
     FFMPEG_NAME = "flash"
