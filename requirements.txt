@@ -1,0 +1,14 @@
+pymongo
+motor
+pyrogram
+TgCrypto
+uvloop
+fastapi
+uvicorn
+gunicorn
+jinja2
+aiofiles
+aiohttp
+pytz
+psutil
+qbittorrent-api
