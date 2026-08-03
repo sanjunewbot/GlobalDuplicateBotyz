@@ -11,4 +11,16 @@ aiofiles
 aiohttp
 pytz
 psutil
+apscheduler
+speedtest-cli
 qbittorrent-api
+python-magic
+Pillow
+aioshutil
+aioaria2
+tenacity
+uvicorn[standard]
+python-dotenv
+telegraph
+anytree
+httpx
